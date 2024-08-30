@@ -1,3 +1,4 @@
+import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs"
 import Link from "next/link"
 import React from "react"
 
@@ -7,7 +8,7 @@ function Header() {
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-24 items-center justify-between">
           <div className="flex items-center gap-1">
-          {/* flex-1 md:flex md:items-center md:gap-12 */}
+            {/* flex-1 md:flex md:items-center md:gap-12 */}
             <svg
               id="logo-64"
               width="30px"
@@ -72,7 +73,9 @@ function Header() {
                 fill="black"
               ></path>
             </svg>
-            <span className="font-semibold tracking-tight text-[1.15rem]">Skotch</span>
+            <span className="font-semibold tracking-tight text-[1.15rem] text-black/90">
+              Skotch
+            </span>
           </div>
 
           <div className="md:flex md:items-center md:gap-12">
@@ -80,7 +83,7 @@ function Header() {
               <ul className="flex items-center gap-8 text-sm">
                 <li>
                   <Link
-                    className="text-gray-500 text-[0.9rem] transition hover:text-gray-500/75"
+                    className="text-black/70 font-medium text-[0.9rem]"
                     href="#"
                   >
                     {" "}
@@ -90,7 +93,7 @@ function Header() {
 
                 <li>
                   <Link
-                    className="text-gray-500 text-[0.9rem] transition hover:text-gray-500/75"
+                    className="text-black/70 font-medium text-[0.9rem]"
                     href="#"
                   >
                     {" "}
@@ -100,7 +103,7 @@ function Header() {
 
                 <li>
                   <Link
-                    className="text-gray-500 text-[0.9rem] transition hover:text-gray-500/75"
+                    className="text-black/70 font-medium text-[0.9rem]"
                     href="#"
                   >
                     {" "}
@@ -112,20 +115,14 @@ function Header() {
 
             <div className="flex items-center gap-4">
               <div className="sm:flex sm:gap-4">
-                <a
-                  className="rounded-md px-5 py-2.5 text-sm font-medium text-black shadow"
-                  href="#"
-                >
+                <LoginLink postLoginRedirectURL="/dashboard" className="rounded-md px-5 py-2.5 text-sm font-medium text-black/90 shadow">
                   Sign in
-                </a>
+                </LoginLink>
 
                 <div className="hidden sm:flex">
-                  <a
-                    className="rounded-md bg-black px-5 py-2.5 text-sm font-medium text-white shadow-2xl"
-                    href="#"
-                  >
+                  <RegisterLink className="rounded-md bg-black/90 px-5 py-2.5 text-sm font-medium text-white shadow-2xl">
                     Get Started
-                  </a>
+                  </RegisterLink>
                 </div>
               </div>
 
