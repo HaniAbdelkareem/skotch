@@ -1,6 +1,5 @@
 import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs"
 import Link from "next/link"
-import React from "react"
 
 function Header() {
   return (
