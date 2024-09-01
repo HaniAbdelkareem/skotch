@@ -42,19 +42,19 @@ function CreateTeam() {
         <p className="mt-1 text-lg font-medium tracking-tight text-black/60">
           You can always change this later from settings
         </p>
-        <div className="mt-14 w-[40%]">
+        <div className="mt-14 w-[30%]">
           <label className="text-[0.95rem] text-black/80 tracking-[-0.3px] font-medium">
             Team name
           </label>
           <Input
             onChange={(e) => setTeamName(e.target.value)}
             placeholder="Name example"
-            className="mt-2"
+            className="mt-2 py-6"
           />
         </div>
         <Button
           disabled={!(teamName && teamName?.length > 0)}
-          className="mt-9 w-[40%]"
+          className="mt-4 w-[30%] py-6"
           onClick={() => createNewTeam()}
         >
           Create Team
