@@ -1,17 +1,24 @@
+import { useEffect, useState } from "react"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
+import { toast } from "sonner"
+import { useConvex, useMutation } from "convex/react"
+
+import { api } from "@/convex/_generated/api"
 import SideNavTopSection, { TEAM } from "./SideNavTopSection"
 import SideNavBottomSection from "./SideNavBottomSection"
-import { useMutation } from "convex/react"
-import { api } from "@/convex/_generated/api"
-import { useState } from "react"
-import { toast } from "sonner"
 
 function SideNav() {
   const { user }: any = useKindeBrowserClient()
   const createFile = useMutation(api.files.createFile)
   const [activeTeam, setActiveTeam] = useState<TEAM>()
+  const convex = useConvex()
+  const [totalFiles, setTotalFiles] = useState<Number>()
+
+  useEffect(() => {
+    activeTeam && getFiles()
+  }, [activeTeam])
+
   const onFileCreate = (fileName: string) => {
-    console.log(fileName)
     createFile({
       fileName: fileName,
       teamId: activeTeam?._id as string,
@@ -22,6 +29,7 @@ function SideNav() {
     }).then(
       (resp) => {
         if (resp) {
+          getFiles()
           toast("File created successfully!!!")
         }
       },
@@ -29,6 +37,13 @@ function SideNav() {
         toast("Error while creating file")
       }
     )
+  }
+
+  const getFiles = async () => {
+    const result = await convex.query(api.files.getFiles, {
+      teamId: activeTeam?._id as string
+    })
+    setTotalFiles(result?.length)
   }
 
   return (
@@ -40,7 +55,10 @@ function SideNav() {
         />
       </div>
       <div>
-        <SideNavBottomSection onFileCreate={onFileCreate} />
+        <SideNavBottomSection
+          totalFiles={totalFiles}
+          onFileCreate={onFileCreate}
+        />
       </div>
     </div>
   )
