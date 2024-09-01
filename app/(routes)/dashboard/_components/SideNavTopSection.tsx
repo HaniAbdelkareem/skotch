@@ -20,7 +20,7 @@ export interface TEAM {
   _id: String
 }
 
-function SideNavTopSection({ user }: any) {
+function SideNavTopSection({ user, setActiveTeamInfo }: any) {
   const menu = [
     {
       id: 1,
@@ -44,6 +44,10 @@ function SideNavTopSection({ user }: any) {
   useEffect(() => {
     user && getTeamList()
   }, [user])
+
+  useEffect(() => {
+    activeTeam && setActiveTeamInfo(activeTeam)
+  }, [activeTeam])
 
   const getTeamList = async () => {
     const result = await convex.query(api.teams.getTeam, { email: user?.email })
@@ -122,8 +126,11 @@ function SideNavTopSection({ user }: any) {
       </Popover>
 
       {/* All File Button */}
-      <Button variant={"outline"} className="w-full gap-1 bg-black/5 text-[0.95rem] mt-8 tracking-[-0.2px] border border-black/15">
-        <LayoutGrid className="h-4 w-4"/>
+      <Button
+        variant={"outline"}
+        className="w-full gap-1 bg-black/5 text-[0.95rem] mt-8 tracking-[-0.2px] border border-black/15"
+      >
+        <LayoutGrid className="h-4 w-4" />
         All Files
       </Button>
     </div>

@@ -1,7 +1,22 @@
+import { useState } from "react"
+
 import { Button } from "@/components/ui/button"
 import { Archive, Flag, Github } from "lucide-react"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
 
-function SideNavBottomSection() {
+function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
+  const [fileInput, setFileInput] = useState("")
+
   const menuList = [
     {
       id: 1,
@@ -26,14 +41,41 @@ function SideNavBottomSection() {
   return (
     <div className="flex flex-col">
       {menuList.map((menu, index) => (
-        <h2 className="flex gap-2 p-2 text-[0.9rem] hover:bg-gray-100 text-black/80 rounded-lg items-center cursor-pointer">
+        <h2 key={index} className="flex gap-2 p-2 text-[0.9rem] hover:bg-gray-100 text-black/80 rounded-lg items-center cursor-pointer">
           <menu.icon className="h-4 w-4 text-black/80" />
           {menu.name}
         </h2>
       ))}
 
       {/* Add New File Button */}
-      <Button className="w-full bg-black/90 mt-3">New File</Button>
+      <Dialog>
+        <DialogTrigger className="" asChild>
+          <Button className="w-full bg-black/90 mt-3">New File</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create New File</DialogTitle>
+            <DialogDescription>
+              <Input
+                onChange={(e) => setFileInput(e.target.value)}
+                placeholder="Enter File Name"
+                className="mt-3"
+              />
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-start">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                disabled={!(fileInput && fileInput.length > 0)}
+                onClick={() => onFileCreate(fileInput)}
+              >
+                Create
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Progress Bar */}
       <div className="h-3 w-full bg-gray-200 rounded-full mt-5">
