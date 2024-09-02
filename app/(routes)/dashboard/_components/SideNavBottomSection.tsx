@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
-import { Archive, Flag, Github } from "lucide-react"
+import { Archive, File, Flag, Github } from "lucide-react"
 import {
   Dialog,
   DialogClose,
@@ -53,7 +53,10 @@ function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
       {/* Add New File Button */}
       <Dialog>
         <DialogTrigger className="" asChild>
-          <Button className="w-full bg-black/90 mt-3">New File</Button>
+          <Button className="w-full bg-blue-600 hover:bg-blue-500 mt-3 text-[0.9rem] tracking-[-0.2px] gap-1.5">
+            <File className="w-[1.1rem] h-[1.1rem]" />
+            New File
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -81,16 +84,16 @@ function SideNavBottomSection({ onFileCreate, totalFiles }: any) {
       </Dialog>
 
       {/* Progress Bar */}
-      <div className="h-3 w-full bg-gray-200 rounded-full mt-5">
+      <div className="h-3 w-full bg-gray-300 rounded-full mt-5">
         <div
-          className={`h-3 bg-blue-500 rounded-full`}
+          className={`h-3 bg-blue-600 rounded-full`}
           style={{ width: `${(totalFiles / 5) * 100}%` }}
         ></div>
       </div>
-      <h2 className="text-black/90 mt-4 text-[0.9rem] tracking-[-0.2px]">
+      <h2 className="text-black/90 mt-5 text-[0.85rem] tracking-[-0.2px]">
         <strong>{totalFiles}</strong> out of <strong>5</strong> files used.
       </h2>
-      <p className="text-black/80 text-[0.8rem] mt-1 tracking-[-0.2px]">
+      <p className="text-black/80 text-[0.75rem] mt-1 tracking-[-0.2px]">
         <strong className="underline font-medium">Upgrade</strong> your plan for
         unlimmited access.
       </p>

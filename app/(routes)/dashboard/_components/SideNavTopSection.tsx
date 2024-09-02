@@ -1,5 +1,12 @@
 import Logo from "@/app/_components/Logo"
-import { ChevronDown, LayoutGrid, LogOut, Settings, Users } from "lucide-react"
+import {
+  BriefcaseBusiness,
+  ChevronDown,
+  LayoutGrid,
+  LogOut,
+  Settings,
+  Users
+} from "lucide-react"
 import {
   Popover,
   PopoverContent,
@@ -51,7 +58,6 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
 
   const getTeamList = async () => {
     const result = await convex.query(api.teams.getTeam, { email: user?.email })
-    console.log("TeamList: ", result)
     setTeamList(result)
     setActiveTeam(result[0])
   }
@@ -67,21 +73,28 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
       <Popover>
         <Logo />
         <PopoverTrigger className="flex flex-col gap-5 w-full mt-6">
-          <h2 className="flex justify-between items-center border backdrop-blur-sm shadow-xl shadow-slate-100 border-black/30 hover:bg-black/5 transition cursor-pointer rounded-md p-3 font-semibold text-[0.95rem] tracking-tight text-black/80">
+          <h2 className="flex justify-between items-center border backdrop-blur-sm shadow-xl shadow-slate-100 border-gray-200 hover:bg-gray-100/30 transition cursor-pointer rounded-md p-3 font-semibold text-[0.95rem] tracking-tight text-black/80">
             {activeTeam?.teamName}
             <ChevronDown className="text-black/80" />
           </h2>
         </PopoverTrigger>
         <PopoverContent className="ml-6 p-4">
           {/* Team Section */}
-          <div className="flex gap-2 flex-col">
+          <div className="flex flex-col">
             {teamList?.map((team, index) => (
               <h2
                 key={index}
-                className={`text-[0.95rem] font-medium text-black/80 hover:text-white hover:bg-black/85 transition p-2.5 rounded-lg cursor-pointer ${activeTeam?._id === team._id && "bg-black/85 text-white"}`}
+                className={`text-[0.9rem] flex gap-2 items-center font-medium text-black/80 transition p-2.5 rounded-sm cursor-pointer ${activeTeam?._id === team._id && "bg-gray-100"}`}
+                // ${activeTeam?._id === team._id && "bg-black/85 text-white"}
                 onClick={() => setActiveTeam(team)}
               >
+                <BriefcaseBusiness className="h-5 w-5 text-black/80" />
                 {team.teamName}
+                {activeTeam?._id === team._id && (
+                  <span className="text-[0.8rem] text-black/80 ml-auto">
+                    Current Team
+                  </span>
+                )}
               </h2>
             ))}
           </div>
@@ -91,14 +104,14 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
             {menu.map((item, index) => (
               <h2
                 key={index}
-                className="flex gap-3 items-center p-2 hover:bg-gray-100 text-black/80 rounded-lg text-[0.9rem] cursor-pointer"
+                className="flex gap-3 items-center p-2 hover:bg-gray-100 text-black/80 rounded-sm text-[0.9rem] cursor-pointer"
                 onClick={() => onMenuClick(item)}
               >
                 <item.icon className="h-5 w-5 text-black/80" />
                 {item.name}
               </h2>
             ))}
-            <LogoutLink className="flex gap-3 items-center p-2 hover:bg-gray-100 rounded-lg text-[0.9rem] cursor-pointer text-black/80">
+            <LogoutLink className="flex gap-3 items-center p-2 hover:bg-gray-100 rounded-sm text-[0.9rem] cursor-pointer text-black/80">
               <LogOut className="h-5 w-5 text-black/80" />
               Logout
             </LogoutLink>
@@ -126,10 +139,7 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
       </Popover>
 
       {/* All File Button */}
-      <Button
-        variant={"outline"}
-        className="w-full gap-1 bg-black/5 text-[0.95rem] mt-8 tracking-[-0.2px] border border-black/15"
-      >
+      <Button className="w-full gap-1 bg-black/85 hover:bg-black/85 text-white text-[0.95rem] mt-8 tracking-[-0.2px] border border-black/15 flex justify-start">
         <LayoutGrid className="h-4 w-4" />
         All Files
       </Button>
