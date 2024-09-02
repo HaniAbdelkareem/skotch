@@ -12,6 +12,7 @@ import List from "@editorjs/list"
 import Checklist from "@editorjs/checklist"
 // @ts-ignore
 import Paragraph from "@editorjs/paragraph"
+import { FILE } from "../../dashboard/_components/FileList"
 
 const rawDocument = {
   time: 1550476186479,
@@ -27,18 +28,26 @@ const rawDocument = {
   version: "2.8.1"
 }
 
-function Editor({ onSaveTrigger, fileId }: any) {
+function Editor({
+  onSaveTrigger,
+  fileId,
+  fileData
+}: {
+  onSaveTrigger: any
+  fileId: any
+  fileData: FILE
+}) {
   const [document, setDocument] = useState(rawDocument)
   const ref = useRef<EditorJS>()
   const updateDocument = useMutation(api.files.updateDocument)
+  
+  useEffect(() => {
+    fileData && initEditor()
+  }, [fileData])
 
   useEffect(() => {
     onSaveTrigger && onSaveDocument()
   }, [onSaveTrigger])
-
-  useEffect(() => {
-    initEditor()
-  }, [])
 
   const initEditor = () => {
     const editor = new EditorJS({
@@ -71,7 +80,7 @@ function Editor({ onSaveTrigger, fileId }: any) {
         }
       },
       holder: "editorjs",
-      data: document
+      data: fileData?.document ? JSON.parse(fileData.document) : rawDocument
     })
 
     ref.current = editor
