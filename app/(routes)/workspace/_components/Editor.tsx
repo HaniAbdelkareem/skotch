@@ -9,6 +9,9 @@ import List from "@editorjs/list"
 import Checklist from "@editorjs/checklist"
 // @ts-ignore
 import Paragraph from "@editorjs/paragraph"
+import { useMutation } from "convex/react"
+import { api } from "@/convex/_generated/api"
+import { toast } from "sonner"
 
 const rawDocument = {
   time: 1550476186479,
@@ -24,9 +27,14 @@ const rawDocument = {
   version: "2.8.1"
 }
 
-function Editor() {
+function Editor({ onSaveTrigger, fileId }: any) {
   const [document, setDocument] = useState(rawDocument)
   const ref = useRef<EditorJS>()
+  const updateDocument = useMutation(api.files.updateDocument)
+
+  useEffect(() => {
+    onSaveTrigger && onSaveDocument()
+  }, [onSaveTrigger])
 
   useEffect(() => {
     initEditor()
@@ -67,6 +75,30 @@ function Editor() {
     })
 
     ref.current = editor
+  }
+
+  const onSaveDocument = () => {
+    if (ref.current) {
+      ref.current
+        .save()
+        .then((outputData) => {
+          console.log("Article data: ", outputData)
+          updateDocument({
+            _id: fileId,
+            document: JSON.stringify(outputData)
+          }).then(
+            () => {
+              toast("Document updated Successfully")
+            },
+            (e) => {
+              toast("Server Error")
+            }
+          )
+        })
+        .catch((error) => {
+          console.log("Saving failed: ", error)
+        })
+    }
   }
 
   return (
