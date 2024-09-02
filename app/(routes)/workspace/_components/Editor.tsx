@@ -1,6 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import { api } from "@/convex/_generated/api"
+import { useMutation } from "convex/react"
 
 import EditorJS from "@editorjs/editorjs"
 import Header from "@editorjs/header"
@@ -9,9 +12,6 @@ import List from "@editorjs/list"
 import Checklist from "@editorjs/checklist"
 // @ts-ignore
 import Paragraph from "@editorjs/paragraph"
-import { useMutation } from "convex/react"
-import { api } from "@/convex/_generated/api"
-import { toast } from "sonner"
 
 const rawDocument = {
   time: 1550476186479,
