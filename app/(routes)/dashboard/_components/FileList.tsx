@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from "next/navigation"
 
 export interface FILE {
   archive: boolean
@@ -28,6 +29,7 @@ export interface FILE {
 
 function FileList() {
   const [fileList, setFileList] = useState<any>()
+  const router = useRouter()
 
   const { user }: any = useKindeBrowserClient()
   const { fileList_, setFileList_ } = useContext(FileListContext)
@@ -60,7 +62,10 @@ function FileList() {
           <tbody className="divide-y divide-gray-200">
             {fileList &&
               fileList.map((file: FILE, index: number) => (
-                <tr className="">
+                <tr
+                  onClick={() => router.push(`/workspace/${file._id}`)}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
                   <td className="whitespace-nowrap px-10 py-4 font-medium text-gray-900">
                     {file.fileName}
                   </td>
@@ -86,7 +91,8 @@ function FileList() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem className="gap-1.5 flex items-center text-black/70 font-medium cursor-pointer">
-                          <Archive className="h-3.5 w-3.5 text-black/70" /> Archive
+                          <Archive className="h-3.5 w-3.5 text-black/70" />{" "}
+                          Archive
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
