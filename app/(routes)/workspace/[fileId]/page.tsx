@@ -7,6 +7,7 @@ import Editor from "../_components/Editor"
 import WorkspaceHeader from "../_components/WorkspaceHeader"
 import { api } from "@/convex/_generated/api"
 import { FILE } from "../../dashboard/_components/FileList"
+import Canvas from "../_components/Canvas"
 
 function Workspace({ params }: any) {
   const [fileData, setFileData] = useState<FILE | any>()
@@ -40,7 +41,9 @@ function Workspace({ params }: any) {
           />
         </div>
         {/* Canvas */}
-        <div className="bg-red-500 h-screen">Canvas</div>
+        <div className="h-screen border-l">
+          <Canvas />
+        </div>
       </div>
     </div>
   )
